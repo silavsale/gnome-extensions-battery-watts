@@ -1,0 +1,7 @@
+{
+  "uuid": "battery-watts@sergo",
+  "name": "Battery Discharge Watts",
+  "description": "Shows real-time battery discharge/charge rate (W) in the top bar.",
+  "version": 3,
+  "shell-version": ["45", "46", "47", "48", "49"]
+}
