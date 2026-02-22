@@ -15,6 +15,10 @@ const UPOWER_IFACE = 'org.freedesktop.UPower.Device';
 
 const SLOT_WIDTH_PX = 52;
 
+// Change this if you want a different green
+const CHARGING_STYLE = 'color: #2ecc71; font-weight: 600;';
+const DEFAULT_STYLE = null;
+
 function formatWh(v) {
   if (v === null || v === undefined || Number.isNaN(v)) return '—';
   return `${v.toFixed(1)} Wh`;
@@ -131,6 +135,13 @@ class BatteryWattsIndicator extends PanelMenu.Button {
       const tte = tteV ? tteV.deepUnpack() : 0;
       const ttf = ttfV ? ttfV.deepUnpack() : 0;
 
+      // ✅ Color: charging = green, else default
+      if (state === 1) {
+        this._label.set_style(CHARGING_STYLE);
+      } else {
+        this._label.set_style(DEFAULT_STYLE);
+      }
+
       // Top bar label (rate)
       if (watts === null) {
         this._label.set_text('…W');
@@ -168,7 +179,7 @@ class BatteryWattsIndicator extends PanelMenu.Button {
 
     } catch (e) {
       this._label.set_text('ERR');
-      // Avoid crashing menu updates if something goes wrong
+      this._label.set_style(DEFAULT_STYLE);
       this._titleItem?.label?.set_text('Battery (Error)');
     }
   }
